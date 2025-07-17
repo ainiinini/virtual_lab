@@ -51,7 +51,7 @@ if st.button("🔍 Hitung dan Visualisasikan"):
     ax.set_yticks(tick_y)
     ax.set_yticklabels([f"{abs(i)} jam" for i in tick_y])
 
-    ax.set_title("Setiap kotak ≈ 1 km | Baris = 1 jam")
+    ax.set_title("Setiap kotak = 1 km | Baris = 1 jam")
     ax.grid(False)
     ax.set_aspect('equal')
     ax.tick_params(left=False, bottom=False)
