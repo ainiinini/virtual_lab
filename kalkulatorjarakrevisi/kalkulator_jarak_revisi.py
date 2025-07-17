@@ -30,7 +30,7 @@ if st.button("🔍 Hitung dan Visualisasikan"):
     st.success(f"📍 Jarak = **{jarak} km**")
 
     # Visualisasi blok
-    st.header("📊 Visualisasi: Blok Jarak per Jam")
+    st.header("📊 Visualisasi")
 
     fig, ax = plt.subplots(figsize=(10, 2))
 
