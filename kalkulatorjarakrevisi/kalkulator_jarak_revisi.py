@@ -17,7 +17,7 @@ st.header("1️⃣ Masukkan Nilai")
 
 col1, col2 = st.columns(2)
 with col1:
-    kecepatan = st.slider("🚗 Kecepatan (km/jam)", min_value=1, max_value=10, value=3, step=1)
+    kecepatan = st.slider("🚗 Kecepatan (km/jam)", min_value=1, max_value=200, value=60, step=1)
 with col2:
     waktu = st.slider("⏱️ Waktu (jam)", min_value=1, max_value=10, value=2, step=1)
 
@@ -29,39 +29,37 @@ if st.button("🔍 Hitung dan Visualisasikan"):
 
     st.success(f"📍 Jarak = **{jarak} km**")
 
-    # ⚙️ Ukuran fig tetap, kotak dikurangi ukurannya
-    fig, ax = plt.subplots(figsize=(8, 5))  # Ukuran tetap
+    # Visualisasi blok: 1 kotak = 10 km (agar efisien)
+    kotak_per_baris = kecepatan // 10
+    total_kotak = kotak_per_baris * waktu
 
-    kotak_lebar = 0.8
-    kotak_tinggi = 0.8
+    fig, ax = plt.subplots(figsize=(12, 5))
 
     for row in range(waktu):
-        for col in range(kecepatan):
-            ax.add_patch(plt.Rectangle((col + 0.1, -row - 0.9), kotak_lebar, kotak_tinggi,
-                                       edgecolor='black', facecolor='skyblue'))
+        for col in range(kotak_per_baris):
+            ax.add_patch(
+                plt.Rectangle((col, -row), 1, -1, edgecolor='black', facecolor='skyblue')
+            )
 
-    ax.set_xlim(0, kecepatan)
+    ax.set_xlim(0, max(kotak_per_baris, 10))
     ax.set_ylim(-waktu, 0)
 
-    tick_x = np.arange(0, kecepatan + 1, 1)
-    tick_y = np.arange(-waktu, 1, 1)
+    ax.set_xticks(np.arange(0, kotak_per_baris + 1, 1))
+    ax.set_xticklabels([f"{(i+1)*10} km" for i in range(kotak_per_baris)])
+    ax.set_yticks(np.arange(0, -waktu - 1, -1))
+    ax.set_yticklabels([f"{abs(i)} jam" for i in range(0, -waktu, -1)])
 
-    ax.set_xticks(tick_x)
-    ax.set_xticklabels([f"{i} km" for i in tick_x])
-    ax.set_yticks(tick_y)
-    ax.set_yticklabels([f"{abs(i)} jam" for i in tick_y])
-
-    ax.set_title("Setiap kotak = 1 km | Baris = 1 jam")
+    ax.set_title("Setiap kotak = 10 km | Baris = 1 jam")
     ax.grid(False)
-    ax.set_aspect('equal')
+    ax.set_aspect('auto')
     ax.tick_params(left=False, bottom=False)
 
     st.pyplot(fig)
 
     st.info(f"""
     📘 **Penjelasan Visual:**
-    - Terdapat {waktu} baris → karena kamu berjalan selama {waktu} jam.
-    - Setiap baris berisi {kecepatan} kotak → karena tiap jam menempuh {kecepatan} km.
-    - Total kotak: **{jarak} km**.
-    - 🧠 Apa rumus yang bisa kamu simpulkan dari ini?
+    - Setiap **baris** menunjukkan perjalanan selama 1 jam.
+    - Dalam 1 jam, kamu menempuh {kecepatan} km → jadi setiap baris punya {kotak_per_baris} kotak (1 kotak = 10 km).
+    - Total kotak: {total_kotak} → total jarak = {jarak} km.
+    - 🧠 Apa rumus yang bisa kamu simpulkan?
     """)
