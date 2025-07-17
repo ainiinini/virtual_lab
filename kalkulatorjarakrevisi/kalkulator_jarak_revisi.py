@@ -29,19 +29,26 @@ if st.button("🔍 Hitung dan Visualisasikan"):
 
     st.success(f"📍 Jarak = **{jarak} km**")
 
-   # Visualisasi kotak grid: baris = jam, kolom = km per jam
+    # Visualisasi kotak grid: baris = jam, kolom = km per jam
     fig, ax = plt.subplots(figsize=(kecepatan, waktu))
-    
+
     for row in range(waktu):
         for col in range(kecepatan):
-            ax.add_patch(plt.Rectangle((col, -row), 1, -1, edgecolor='black', facecolor='skyblue'))
+            ax.add_patch(plt.Rectangle((col, -row-1), 1, 1, edgecolor='black', facecolor='skyblue'))
 
     ax.set_xlim(0, kecepatan)
     ax.set_ylim(-waktu, 0)
-    ax.set_xticks(np.arange(0, kecepatan + 1, 1))
-    ax.set_yticks(np.arange(0, -waktu - 1, -1))
-    ax.set_xticklabels([f"{i+1} km" for i in range(kecepatan)])
-    ax.set_yticklabels([f"{abs(i)} jam" for i in range(0, -waktu, -1)])
+
+    # ✅ Set xticks dan label sesuai jumlah posisi
+    tick_x = np.arange(0, kecepatan + 1, 1)
+    tick_y = np.arange(-waktu, 1, 1)
+
+    ax.set_xticks(tick_x)
+    ax.set_xticklabels([f"{i} km" for i in tick_x])
+
+    ax.set_yticks(tick_y)
+    ax.set_yticklabels([f"{abs(i)} jam" for i in tick_y])
+
     ax.set_title("Setiap kotak = 1 km | Setiap baris = 1 jam")
     ax.grid(False)
     ax.set_aspect('equal')
@@ -53,8 +60,6 @@ if st.button("🔍 Hitung dan Visualisasikan"):
     📘 **Penjelasan Visual:**
     - Terdapat {waktu} baris → karena kamu berjalan selama {waktu} jam.
     - Setiap baris berisi {kecepatan} kotak → karena tiap jam menempuh {kecepatan} km.
-    - Total kotak: {jarak} km.
-    - Apa rumus yang bisa kamu simpulkan dari ini?
+    - Total kotak: **{jarak} km**.
+    - 🧠 Apa rumus yang bisa kamu simpulkan dari ini?
     """)
-
-
