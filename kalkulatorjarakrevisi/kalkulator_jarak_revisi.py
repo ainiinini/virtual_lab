@@ -5,7 +5,7 @@ import time
 
 # Konfigurasi halaman
 st.set_page_config(page_title="Kalkulator Visual Jarak", layout="wide")
-st.title("🧠 Kalkulator Visual Interaktif: Jarak = Kecepatan × Waktu")
+st.title("🧠 Kalkulator Jarak")
 
 st.markdown("""
 Pelajari hubungan **jarak**, **kecepatan**, dan **waktu** melalui visualisasi interaktif.  
@@ -27,7 +27,7 @@ if st.button("🔍 Hitung dan Visualisasikan"):
     with st.spinner("Menghitung..."):
         time.sleep(1)
 
-    st.success(f"📍 Jarak = {kecepatan} × {waktu} = **{jarak} km**")
+    st.success(f"📍 Jarak = **{jarak} km**")
 
     # Visualisasi blok
     st.header("📊 Visualisasi: Blok Jarak per Jam")
@@ -52,20 +52,9 @@ if st.button("🔍 Hitung dan Visualisasikan"):
     # Penjelasan eksploratif
     st.info(f"""
     🔎 **Penjelasan Visual:**
-    - Setiap baris waktu (jam) berisi {kecepatan} blok → artinya tiap jam, kamu menempuh {kecepatan} km.
+    - Setiap baris waktu (jam) berisi {kecepatan} 
     - Total blok: {jarak} → berarti kamu telah menempuh {jarak} km dalam {waktu} jam.
     - Apa rumus yang bisa kamu simpulkan dari ini?
     """)
 
-# Refleksi siswa
-st.markdown("""
----
-### 💡 Coba Refleksikan:
-- Bagaimana bentuk blok jika waktu tetap dan kecepatan ditambah?
-- Bagaimana bentuk blok jika kecepatan tetap dan waktu ditambah?
-- Dapatkah kamu menuliskan **rumus jarak** berdasarkan blok?
-- Jika kamu tahu jarak dan waktu, bisakah kamu menebak kecepatan?
-""")
 
-# Footer
-st.caption("📘 Dibuat dengan Streamlit + Matplotlib untuk pembelajaran visual.")
