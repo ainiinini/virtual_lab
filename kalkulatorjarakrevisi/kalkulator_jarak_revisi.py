@@ -29,31 +29,31 @@ if st.button("🔍 Hitung dan Visualisasikan"):
 
     st.success(f"📍 Jarak = **{jarak} km**")
 
-    # Visualisasi blok
-    st.header("📊 Visualisasi")
+   # Visualisasi kotak grid: baris = jam, kolom = km per jam
+    fig, ax = plt.subplots(figsize=(kecepatan, waktu))
+    
+    for row in range(waktu):
+        for col in range(kecepatan):
+            ax.add_patch(plt.Rectangle((col, -row), 1, -1, edgecolor='black', facecolor='skyblue'))
 
-    fig, ax = plt.subplots(figsize=(10, 2))
+    ax.set_xlim(0, kecepatan)
+    ax.set_ylim(-waktu, 0)
+    ax.set_xticks(np.arange(0, kecepatan + 1, 1))
+    ax.set_yticks(np.arange(0, -waktu - 1, -1))
+    ax.set_xticklabels([f"{i+1} km" for i in range(kecepatan)])
+    ax.set_yticklabels([f"{abs(i)} jam" for i in range(0, -waktu, -1)])
+    ax.set_title("Setiap kotak = 1 km | Setiap baris = 1 jam")
+    ax.grid(False)
+    ax.set_aspect('equal')
+    ax.tick_params(left=False, bottom=False)
 
-    # Buat visualisasi berupa blok-blok
-    x = 0
-    for jam in range(1, waktu + 1):
-        for k in range(kecepatan):
-            ax.bar(x, 1, color='skyblue', edgecolor='black')
-            x += 1
-
-    ax.set_xlim(0, max(10, kecepatan * waktu))
-    ax.set_ylim(0, 1.5)
-    ax.set_yticks([])
-    ax.set_xticks(np.arange(0, kecepatan * waktu + 1, kecepatan))
-    ax.set_xlabel("Jarak (km)")
-    ax.set_title("Setiap blok = 1 km; 1 jam = deretan blok berjumlah kecepatan")
     st.pyplot(fig)
 
-    # Penjelasan eksploratif
     st.info(f"""
-    🔎 **Penjelasan Visual:**
-    - Setiap baris waktu (jam) berisi {kecepatan} 
-    - Total blok: {jarak} → berarti kamu telah menempuh {jarak} km dalam {waktu} jam.
+    📘 **Penjelasan Visual:**
+    - Terdapat {waktu} baris → karena kamu berjalan selama {waktu} jam.
+    - Setiap baris berisi {kecepatan} kotak → karena tiap jam menempuh {kecepatan} km.
+    - Total kotak: {jarak} km.
     - Apa rumus yang bisa kamu simpulkan dari ini?
     """)
 
