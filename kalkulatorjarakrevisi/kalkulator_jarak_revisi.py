@@ -29,37 +29,43 @@ if st.button("🔍 Hitung dan Visualisasikan"):
 
     st.success(f"📍 Jarak = **{jarak} km**")
 
-    # Visualisasi blok: 1 kotak = 10 km (agar efisien)
-    kotak_per_baris = kecepatan // 10
+    # Set 1 kotak mewakili 10 km
+    km_per_kotak = 10
+    kotak_per_baris = max(1, kecepatan // km_per_kotak)  # minimal 1 agar tidak error
     total_kotak = kotak_per_baris * waktu
 
-    fig, ax = plt.subplots(figsize=(12, 5))
+    fig, ax = plt.subplots(figsize=(kotak_per_baris, waktu))  # Ukuran lebih proporsional
 
+    # Gambar kotak
     for row in range(waktu):
         for col in range(kotak_per_baris):
             ax.add_patch(
                 plt.Rectangle((col, -row), 1, -1, edgecolor='black', facecolor='skyblue')
             )
 
-    ax.set_xlim(0, max(kotak_per_baris, 10))
+    ax.set_xlim(0, kotak_per_baris)
     ax.set_ylim(-waktu, 0)
 
-    ax.set_xticks(np.arange(0, kotak_per_baris + 1, 1))
-    ax.set_xticklabels([f"{(i+1)*10} km" for i in range(kotak_per_baris)])
-    ax.set_yticks(np.arange(0, -waktu - 1, -1))
-    ax.set_yticklabels([f"{abs(i)} jam" for i in range(0, -waktu, -1)])
+    # Label sumbu x
+    x_ticks = np.arange(0, kotak_per_baris, 1)
+    x_labels = [f"{(i+1)*km_per_kotak} km" for i in x_ticks]
+    ax.set_xticks(x_ticks)
+    ax.set_xticklabels(x_labels)
 
-    ax.set_title("Setiap kotak = 10 km | Baris = 1 jam")
+    # Label sumbu y
+    y_ticks = np.arange(0, -waktu, -1)
+    y_labels = [f"{abs(i)} jam" for i in y_ticks]
+    ax.set_yticks(y_ticks)
+    ax.set_yticklabels(y_labels)
+
+    ax.set_title("Setiap kotak = 10 km | Baris = 1 jam", fontsize=12)
     ax.grid(False)
-    ax.set_aspect('auto')
+    ax.set_aspect('equal')
     ax.tick_params(left=False, bottom=False)
 
     st.pyplot(fig)
 
     st.info(f"""
     📘 **Penjelasan Visual:**
-    - Setiap **baris** menunjukkan perjalanan selama 1 jam.
-    - Dalam 1 jam, kamu menempuh {kecepatan} km → jadi setiap baris punya {kotak_per_baris} kotak (1 kotak = 10 km).
-    - Total kotak: {total_kotak} → total jarak = {jarak} km.
-    - 🧠 Apa rumus yang bisa kamu simpulkan?
-    """)
+    - Setiap **baris** menunjukkan waktu 1 jam.
+    - Dalam 1 jam, kamu menempuh {kecepatan} km → jadi 1 baris = {kotak_per_baris} kotak (1 kotak = 10 km).
