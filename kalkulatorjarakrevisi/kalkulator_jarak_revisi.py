@@ -65,7 +65,7 @@ if st.button("🔍 Hitung dan Visualisasikan"):
 
     st.pyplot(fig)
 
-        st.info(f"""
+    st.info(f"""
     📘 **Penjelasan Visual:**
     - Setiap **baris** menunjukkan perjalanan selama 1 jam.
     - Dalam 1 jam, kamu menempuh {kecepatan} km → jadi setiap baris punya {kotak_per_baris} kotak (1 kotak = 10 km).
