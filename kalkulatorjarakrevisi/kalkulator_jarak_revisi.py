@@ -72,3 +72,9 @@ if st.button("🔍 Hitung dan Visualisasikan"):
     - Total kotak: {total_kotak} → total jarak = {jarak} km.
     - 🧠 Apa rumus yang bisa kamu simpulkan?
     """)
+
+    st.markdown("""
+    ---
+    📎 Tulislah jawaban jarak pada LKS berikut:  
+    👉 [Link](https://docs.google.com/document/d/1pb9kX3O1Pp2P9S1CrxJu7Eg6Zg7i8tGC/edit?usp=drive_link&ouid=114410449447808088697&rtpof=true&sd=true)
+    """)
